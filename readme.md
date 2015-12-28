@@ -1,8 +1,10 @@
 iSell
 
+EM DESENVOLVIMENTO 
+
 Sistema de gerenciamento de negócios, que vendam produtos ou serviços.
 
-Funcionalidades:
+Funcionalidades (Previstas) :
 
 Autenticação / Autorização
 Cadastro e Controle de Usuários
