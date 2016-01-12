@@ -31,7 +31,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
     //
-    
+
     Route::group([ 'prefix'=>'/admin',['middleware' => [''] ]], function () {
 
     	//Grupo de rotas
@@ -39,7 +39,7 @@ Route::group(['middleware' => ['web']], function () {
 
     		Route::get('/','FornecedorController@listar');
     		Route::get('/criar','FornecedorController@criar');
-    		
+
     		Route::get('/{PK_fornecedor}','FornecedorController@ver');
     		Route::get('/{PK_fornecedor}/deletar','FornecedorController@deletar');
     		Route::get('/{PK_fornecedor}/editar','FornecedorController@editar');
@@ -49,15 +49,19 @@ Route::group(['middleware' => ['web']], function () {
 
     	});
 
-        Route::group(['prefix'=>'/usuarios',['middleware' => ['']]], function () {
+        Route::group(['prefix'=>'/produto',['middleware' => ['']]], function () {
 
+          Route::get('/','ProdutoController@listar');
+          Route::get('/criar','ProdutoController@criar');
 
-            Route::get('/','UsuariosController@listar');
-            Route::get('/criar','UsuariosController@criar');
-            // Route::get('/',function(){ return view('sistemas.usuarios.listUsuarios'); });
-            // Route::get('/novo',function(){ return view('sistemas.usuarios.newUsuarios'); });
+          Route::get('/{PK_produto}','ProdutoController@ver');
+          Route::get('/{PK_produto}/deletar','ProdutoController@deletar');
+          Route::get('/{PK_produto}/editar','ProdutoController@editar');
 
-        });   
+          Route::post('/atualizar','ProdutoController@atualizar');
+          Route::post('/salvar','ProdutoController@salvar');
+
+        });
 
 	});
 
