@@ -31,14 +31,40 @@
     <ul class="sidebar-menu">
       <li class="header">MENU</li>
       <!-- Optionally, you can add icons to the links -->
+        <?php $menu = Session::get('menu'); ?>
+        
+        <?php 
+        $count = 0;
+        $data = array(); 
+        foreach ($menu as $item) :
+          $data[$count] = $item->nome;
+          $count++;
+        endforeach; 
+        $data = array_unique($data);
+        sort($data);
+        ?>
+        
+        <?php 
+          foreach ($data as $k) : 
+        ?>
       <li class="treeview">
-        <a href="#"><span>Fornecedores</span> <i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><span><?= $k; ?></span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <li><a href="/admin/fornecedores/">Listar Fornecedores</a></li>
-          <li><a href="/admin/fornecedores/novo-fornecedor">Novo Fornecedor</a></li>
+        <?php 
+          foreach ($menu as $key) :
+            if ($k == $key->nome && $key->display==1) : 
+              $exp = explode("@",$key->rota);
+              if ($exp[1] == "listar") $exp[1] = "";
+            ?>
+              <li><a href='/admin/<?=lcfirst($key->nome);?>/<?=$exp[1];?>'>{{$key->descricao}}</a></li>
+              
+        <?php endif; ?>
+        <?php endforeach; ?>
         </ul>
+        <?php endforeach; ?>
       </li>
-    </ul><!-- /.sidebar-menu -->
+    </ul>
+      <!-- /.sidebar-menu -->
   </section>
   <!-- /.sidebar -->
 </aside>

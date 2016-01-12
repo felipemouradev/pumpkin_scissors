@@ -24,6 +24,8 @@
 */
 
 Route::get('/', function () {
+    $routeCollection = Route::getRoutes();
+    //dd($routeCollection);
     return view('admin-lte.login');
 });
 
@@ -33,19 +35,30 @@ Route::group(['middleware' => ['web']], function () {
     Route::group([ 'prefix'=>'/admin',['middleware' => [''] ]], function () {
 
     	//Grupo de rotas
-    	Route::group(['prefix'=>'/fornecedores',['middleware' => ['']]], function () {
+    	Route::group(['prefix'=>'/fornecedor',['middleware' => ['']]], function () {
 
-    		Route::get('/','FornecedorController@index');
-    		Route::get('/novo-fornecedor','FornecedorController@novo');
+    		Route::get('/','FornecedorController@listar');
+    		Route::get('/criar','FornecedorController@criar');
     		
     		Route::get('/{PK_fornecedor}','FornecedorController@ver');
     		Route::get('/{PK_fornecedor}/deletar','FornecedorController@deletar');
     		Route::get('/{PK_fornecedor}/editar','FornecedorController@editar');
 
-    		Route::post('/{PK_fornecedor}/salva-modificacao','FornecedorController@salvaEdicoes');
-    		Route::post('/salvar-novo-fornecedor','FornecedorController@salvar');
+    		Route::post('/atualizar','FornecedorController@atualizar');
+    		Route::post('/salvar','FornecedorController@salvar');
 
     	});
+
+        Route::group(['prefix'=>'/usuarios',['middleware' => ['']]], function () {
+
+
+            Route::get('/','UsuariosController@listar');
+            Route::get('/criar','UsuariosController@criar');
+            // Route::get('/',function(){ return view('sistemas.usuarios.listUsuarios'); });
+            // Route::get('/novo',function(){ return view('sistemas.usuarios.newUsuarios'); });
+
+        });   
+
 	});
 
 });
