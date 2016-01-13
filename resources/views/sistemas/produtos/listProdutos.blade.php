@@ -29,7 +29,7 @@
         @foreach ($data as $k )
         <tr>
           <td>{{ $k->PK_produto }}</td>
-          <td>{{ $k->fornecedor->nome }}</td>
+          <td><a href='/admin/fornecedor/{{ $k->FK_fornecedor }}'>{{ $k->fornecedor->nome }}</a></td>
           <td><a href='/admin/produto/{{ $k->PK_produto }}'>{{ $k->nome }}</a></td>
           <td>{{ $k->codigo }}</td>
           <td>{{ $k->descricao }}</td>

@@ -19,7 +19,8 @@ class ProdutoController extends Controller
 
     public function criar(){
       $data = Fornecedores::all();
-    	return view('sistemas.produtos.newProdutos',compact('data',$data));
+      $fornecedores = Fornecedores::all();
+    	return view('sistemas.produtos.newProdutos',compact('fornecedores',$fornecedores));
     }
 
     public function salvar(Request $request){
@@ -37,8 +38,9 @@ class ProdutoController extends Controller
     }
 
     public function editar(Request $request,$PK_produto) {
-        $data = produtos::find($PK_fornecedor);
-        return view('sistemas.produtos.editProdutos',compact('data',$data));
+        $data = Produtos::find($PK_produto);
+        $fornecedores = Fornecedores::all();
+        return view('sistemas.produtos.editProdutos',compact('data',$data,'fornecedores',$fornecedores));
     }
 
     public function atualizar(Request $request){

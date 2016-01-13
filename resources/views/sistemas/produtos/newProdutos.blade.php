@@ -14,12 +14,23 @@
               <h3 class='box-title'>Salvando produto</h3>
             </div><!-- /.box-header -->
             <!-- form start -->
+
             <form action='/admin/produto/salvar' method='POST' enctype='multipart/form-data'>
               <div class='box-body'>
+
                 <div class='form-group'>
-                    <label for='exampleInput'>FK_fornecedor</label>
-                    <input type='text' class='form-control' name='FK_fornecedor' placeholder='Digite FK_fornecedor' value='{{ old('FK_fornecedor') }}'>
+                  <label for='exampleInput'>Fornecedor</label>
+                  <select class="form-control" name="FK_fornecedor">
+                    @foreach($fornecedores as $fornecedor)
+                    @if($fornecedor->PK_fornecedor == old('FK_fornecedor'))
+                    <option value={{ $fornecedor->PK_fornecedor }} selected>{{ $fornecedor->nome }}</option>
+                    @else
+                    <option value={{ $fornecedor->PK_fornecedor }}>{{ $fornecedor->nome }}</option>
+                    @endif;
+                    @endforeach
+                  </select>
                 </div>
+
                 <div class='form-group'>
                     <label for='exampleInput'>Nome</label>
                     <input type='text' class='form-control' name='nome' placeholder='Digite nome' value='{{ old('nome') }}'>

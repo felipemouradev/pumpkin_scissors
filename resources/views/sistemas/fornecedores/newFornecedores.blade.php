@@ -37,7 +37,7 @@
                 <button type='submit' class='btn btn-primary'>Salvar</button>
               </div>
             </form>
-          </div><!-- /.box -->  
+          </div><!-- /.box -->
         </div>
         </div>
         @endsection
