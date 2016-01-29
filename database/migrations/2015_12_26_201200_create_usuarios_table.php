@@ -14,12 +14,13 @@ class CreateUsuariosTable extends Migration {
 	{
 		Schema::create('usuarios', function(Blueprint $table)
 		{
-			$table->increments('PK_usuario');
-			$table->string('nome', 50)->nullable();
-			$table->string('login', 50)->nullable();
-			$table->string('senha', 300)->nullable();
-			$table->string('email', 200)->nullable();
-			$table->integer('flAtivo')->nullable();
+			$table->increments('id');
+			$table->string('nome', 50);
+			$table->string('login', 80)->unique();
+			$table->string('senha', 80);
+			$table->string('email', 200)->unique();
+			$table->string('image_perfil', 2083);
+			$table->integer('flAtivo')->default(1);
 			$table->timestamps();
 		});
 	}
