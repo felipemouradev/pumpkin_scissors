@@ -15,6 +15,7 @@ class CreateJornaisTable extends Migration
         Schema::create('jornais', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome', 300);
+            $table->string('slug_name', 500);
             $table->timestamps();
         });
     }

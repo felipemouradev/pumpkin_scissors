@@ -15,9 +15,9 @@ class CreatePermissoesTable extends Migration {
 		Schema::create('permissoes', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('rota', 200)->nullable();
-			$table->string('nome', 100)->nullable();
-			$table->string('descricao', 200)->nullable();
+			$table->string('rota')->nullable();
+			$table->string('nome')->nullable();
+			$table->string('descricao')->nullable();
 			$table->integer('display')->default(0);
 			$table->timestamps();
 		});

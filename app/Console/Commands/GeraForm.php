@@ -238,7 +238,7 @@ class GeraForm extends Command
 
             if ($op==1) $var = "old('".$k."')";
             else $var = "$".$data."->".$k;
-            $PK_ = "$".$data."->PK_".$name;
+            $PK_ = "$".$data."->".$name."_id";
 
             $theme .= "
                 <div class='form-group'>
@@ -250,7 +250,7 @@ class GeraForm extends Command
         endforeach;
 
         if ($op==0) :
-          $theme .= "<input type='hidden' value='{{ ".$PK_." }}' name='PK_".$name."' >";
+          $theme .= "<input type='hidden' value='{{ ".$PK_." }}' name='".$name."_id' >";
         endif;
 
         $theme .= "

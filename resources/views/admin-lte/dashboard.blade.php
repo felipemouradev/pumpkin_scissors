@@ -6,7 +6,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>iSell</title>
+    <title>Pumpkin Scissors</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.2 -->
     <link href="{{ asset("/bower_components/admin-lte/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
@@ -16,6 +16,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="{{ asset("/bower_components/admin-lte/dist/css/AdminLTE.min.css")}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset("/bower_components/admin-lte/plugins/select2/select2.min.css") }}">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
@@ -58,17 +59,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <!-- You can dynamically generate breadcrumbs here -->
+          <?php
+            $data = Route::getCurrentRoute()->getPath();
+            $exp = explode('/',$data);
+          ?>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-            <li class="active">Here</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i>{{ ucfirst($exp[0]) }}</a></li>
+            <li class="active">{{ ucfirst($exp[1]) }}</li>
           </ol>
         </section>
 
         <!-- Main content -->
-        <section class="content">          
+        <section class="content">
           <!-- Your Page Content Here -->
           @yield('content')
-          
+
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
@@ -85,10 +90,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset ("/bower_components/admin-lte/bootstrap/js/bootstrap.min.js") }}" type="text/javascript"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset ("/bower_components/admin-lte/dist/js/app.min.js") }}" type="text/javascript"></script>
-    
 
-    <!-- Optionally, you can add Slimscroll and FastClick plugins. 
-          Both of these plugins are recommended to enhance the 
+    <script src="{{ asset ("/bower_components/admin-lte/plugins/select2/select2.full.min.js") }}"></script>
+    <!-- Optionally, you can add Slimscroll and FastClick plugins.
+          Both of these plugins are recommended to enhance the
           user experience -->
+    <script>
+      $(function () {
+        //Initialize Select2 Elements
+          $(".select2").select2();
+        });
+    </script>
   </body>
 </html>

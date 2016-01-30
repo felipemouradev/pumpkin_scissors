@@ -2,7 +2,7 @@
 <header class="main-header">
 
   <!-- Logo -->
-  <a href="/admin/fornecedor/" class="logo"><b>iSell </b> Comercial </a>
+  <a href="/admin/fornecedor/" class="logo"><b>Pumpkin</b> Scissors </a>
 
   <!-- Header Navbar -->
   <nav class="navbar navbar-static-top" role="navigation">

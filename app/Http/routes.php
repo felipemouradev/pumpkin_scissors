@@ -35,33 +35,61 @@ Route::group(['middleware' => ['web']], function () {
     Route::group([ 'prefix'=>'/admin',['middleware' => [''] ]], function () {
 
     	//Grupo de rotas
-    	Route::group(['prefix'=>'/fornecedor',['middleware' => ['']]], function () {
+    	Route::group(['prefix'=>'/usuario',['middleware' => ['']]], function () {
 
-    		Route::get('/','FornecedorController@listar');
-    		Route::get('/criar','FornecedorController@criar');
+    		Route::get('/','UsuarioController@listar');
+    		Route::get('/criar','UsuarioController@criar');
 
-    		Route::get('/{PK_fornecedor}','FornecedorController@ver');
-    		Route::get('/{PK_fornecedor}/deletar','FornecedorController@deletar');
-    		Route::get('/{PK_fornecedor}/editar','FornecedorController@editar');
+    		Route::get('/{id}','UsuarioController@ver');
+    		Route::get('/{id}/deletar','UsuarioController@deletar');
+    		Route::get('/{id}/editar','UsuarioController@editar');
 
-    		Route::post('/atualizar','FornecedorController@atualizar');
-    		Route::post('/salvar','FornecedorController@salvar');
+    		Route::post('/atualizar','UsuarioController@atualizar');
+    		Route::post('/salvar','UsuarioController@salvar');
 
     	});
 
-        Route::group(['prefix'=>'/produto',['middleware' => ['']]], function () {
+      Route::group(['prefix'=>'/status',['middleware' => ['']]], function () {
 
-          Route::get('/','ProdutoController@listar');
-          Route::get('/criar','ProdutoController@criar');
+    		Route::get('/','StatusController@listar');
+    		Route::get('/criar','StatusController@criar');
 
-          Route::get('/{PK_produto}','ProdutoController@ver');
-          Route::get('/{PK_produto}/deletar','ProdutoController@deletar');
-          Route::get('/{PK_produto}/editar','ProdutoController@editar');
+    		Route::get('/{id}','StatusController@ver');
+    		Route::get('/{id}/deletar','StatusController@deletar');
+    		Route::get('/{id}/editar','StatusController@editar');
 
-          Route::post('/atualizar','ProdutoController@atualizar');
-          Route::post('/salvar','ProdutoController@salvar');
+    		Route::post('/atualizar','StatusController@atualizar');
+    		Route::post('/salvar','StatusController@salvar');
 
-        });
+    	});
+
+      Route::group(['prefix'=>'/jornal',['middleware' => ['']]], function () {
+
+    		Route::get('/','JornalController@listar');
+    		Route::get('/criar','JornalController@criar');
+
+    		Route::get('/{id}','JornalController@ver');
+    		Route::get('/{id}/deletar','JornalController@deletar');
+    		Route::get('/{id}/editar','JornalController@editar');
+
+    		Route::post('/atualizar','JornalController@atualizar');
+    		Route::post('/salvar','JornalController@salvar');
+
+    	});
+
+      Route::group(['prefix'=>'/editoria',['middleware' => ['']]], function () {
+
+    		Route::get('/','EditoriaController@listar');
+    		Route::get('/criar','EditoriaController@criar');
+
+    		Route::get('/{id}','EditoriaController@ver');
+    		Route::get('/{id}/deletar','EditoriaController@deletar');
+    		Route::get('/{id}/editar','EditoriaController@editar');
+
+    		Route::post('/atualizar','EditoriaController@atualizar');
+    		Route::post('/salvar','EditoriaController@salvar');
+
+    	});
 
 	});
 

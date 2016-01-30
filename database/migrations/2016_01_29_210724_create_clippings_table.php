@@ -16,18 +16,21 @@ class CreateClippingsTable extends Migration
             $table->increments('id');
             $table->dateTime('data_clipping');
             $table->double('centimetragem');
+            $table->string('type')->default('n');
             $table->integer('jornal_id')->unsigned();
             $table->integer('editoria_id')->unsigned();
             $table->integer('fonte_id')->unsigned();
             $table->integer('status_id')->unsigned();
             $table->integer('usuario_id')->unsigned();
+            $table->integer('cliente_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('jornal_id')->references('id')->on('jornais');
             $table->foreign('editoria_id')->references('id')->on('editorias');
             $table->foreign('fonte_id')->references('id')->on('fontes');
             $table->foreign('status_id')->references('id')->on('status');
-            $table->foreign('usuario_id')->references('id')->on('usuario');
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
+            $table->foreign('cliente_id')->references('id')->on('clientes');
         });
     }
 

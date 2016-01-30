@@ -15,6 +15,7 @@ class CreateEditoriasTable extends Migration
         Schema::create('editorias', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome', 300);
+            $table->string('slug_name', 500);
             $table->integer('jornal_id')->unsigned();
             $table->timestamps();
 

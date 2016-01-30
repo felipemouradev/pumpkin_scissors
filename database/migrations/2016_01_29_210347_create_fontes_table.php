@@ -14,7 +14,8 @@ class CreateFontesTable extends Migration
     {
         Schema::create('fontes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome', 300);
+            $table->string('nome');
+            $table->string('slug_name', 500);
             $table->timestamps();
         });
     }

@@ -8,7 +8,7 @@
   @endif
   <div class='box'>
     <div class='box-header with-border'>
-      <h3 class='box-title'>Lista de Fornecedores</h3>
+      <h3 class='box-title'>Lista de Jornais</h3>
     </div>
 
     <div class='box-body .col-sm-12 table-responsive'>
@@ -17,29 +17,22 @@
           <tbody>
             <tr><th style='width: 10px'>Código</th>
 <th>Nome</th>
-<th>Cnpj</th>
-<th>Telefone</th>
-<th>Email</th>
 <th>Ações</th>
         </tbody>
         @foreach ($data as $k )
-            <tr><td>{{ $k->PK_fornecedor }}</td>
-<td><a href='/admin/fornecedor/{{ $k->PK_fornecedor }}'>{{ $k->nome }}</a></td>
-<td>{{ $k->cnpj }}</td>
-<td>{{ $k->telefone }}</td>
-<td>{{ $k->email }}</td>
-
+            <tr><td>{{ $k->id }}</td>
+<td><a href='/admin/jornal/{{ $k->id }}'>{{ $k->nome }}</a></td>
               <td>
-                  <a href='/admin/fornecedor/{{ $k->PK_fornecedor }}'><span class='badge bg-green'>Ver</span></a>
-                  <a href='/admin/fornecedor/{{ $k->PK_fornecedor }}/editar'><span class='badge bg-yellow'>Editar</span></a>
-                  <a href='/admin/fornecedor/{{ $k->PK_fornecedor }}/deletar'><span class='badge bg-red'>Excluir</span></a>
-                
+                  <a href='/admin/jornal/{{ $k->id }}'><span class='badge bg-green'>Ver</span></a>
+                  <a href='/admin/jornal/{{ $k->id }}/editar'><span class='badge bg-yellow'>Editar</span></a>
+                  <a href='/admin/jornal/{{ $k->id }}/deletar'><span class='badge bg-red'>Excluir</span></a>
+
               </td>
             </tr>
             @endforeach
         </tbody>
         </table>
-    </div>    
+    </div>
     <div class='box-footer clearfix'>
       <ul class='pagination pagination-sm no-margin pull-right'>
         {!! $data->render() !!}

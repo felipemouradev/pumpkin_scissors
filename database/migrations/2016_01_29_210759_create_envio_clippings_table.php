@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEnvioClippinsTable extends Migration
+class CreateEnvioClippingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateEnvioClippinsTable extends Migration
      */
     public function up()
     {
-        Schema::create('envio_clippins', function (Blueprint $table) {
+        Schema::create('envio_clippings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('clipping_id')->unsigned();
             $table->timestamps();
@@ -28,6 +28,6 @@ class CreateEnvioClippinsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('envio_clippins');
+        Schema::drop('envio_clippings');
     }
 }
