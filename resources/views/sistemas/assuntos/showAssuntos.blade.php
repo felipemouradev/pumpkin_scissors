@@ -4,7 +4,7 @@
   <div class='col-md-10'>
     <div class='box'>
       <div class='box-header'>
-        <h3 class='box-title'>Editorias</h3>
+        <h3 class='box-title'>Assuntos</h3>
       </div>
       <!-- /.box-header -->
       <div class='box-body'>
@@ -13,12 +13,14 @@
           <tr>
             <th style='width: 10px'>Codigo</th>
             <th>Nome</th>
-            <th>Jornal</th>
+            <th>Salvo por: </th>
+            <th>Cliente</th>
           </tr>
           <tr>
             <td>{{ $data->id }}</td>
-            <td>{{ $data->nome }} </td>
-            <td>{{ $data->jornal->nome}}</td>
+            <td>{{ $data->nome }}</td>
+            <td>{{ $data->usuario->login }}</td>
+            <td>{{ $data->cliente->nome }}</td>
           </tr>
         </tbody></table>
       </div>

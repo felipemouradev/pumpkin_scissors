@@ -7,10 +7,14 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel">
       <div class="pull-left image">
+        @if(Session::get('logado.0.image_perfil'))
+        <img src="{{ asset(Session::get('logado.0.image_perfil')) }}" class="user-image" alt="User Image"/>
+        @else
         <img src="{{ asset("/bower_components/admin-lte/dist/img/avatar04.png") }}" class="img-circle" alt="User Image" />
+        @endif
       </div>
       <div class="pull-left info">
-        <p>{{ strtoupper(Session::get('usuario.login'))}}</p>
+        <p>{{ strtoupper(Session::get('logado.0.login'))}}</p>
         <!-- Status -->
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>
@@ -32,32 +36,32 @@
       <li class="header">MENU</li>
       <!-- Optionally, you can add icons to the links -->
         <?php $menu = Session::get('menu'); ?>
-        
-        <?php 
+
+        <?php
         $count = 0;
-        $data = array(); 
+        $data = array();
         foreach ($menu as $item) :
           $data[$count] = $item->nome;
           $count++;
-        endforeach; 
+        endforeach;
         $data = array_unique($data);
         sort($data);
         ?>
-        
-        <?php 
-          foreach ($data as $k) : 
+
+        <?php
+          foreach ($data as $k) :
         ?>
       <li class="treeview">
         <a href="#"><span><?= $k; ?></span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu">
-        <?php 
+        <?php
           foreach ($menu as $key) :
-            if ($k == $key->nome && $key->display==1) : 
+            if ($k == $key->nome && $key->display==1) :
               $exp = explode("@",$key->rota);
               if ($exp[1] == "listar") $exp[1] = "";
             ?>
               <li><a href='/admin/<?=lcfirst($key->nome);?>/<?=$exp[1];?>'>{{$key->descricao}}</a></li>
-              
+
         <?php endif; ?>
         <?php endforeach; ?>
         </ul>

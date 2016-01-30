@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Usuarios;
+use App\Http\Controllers\IOController;
 
 class UsuarioController extends Controller
 {
@@ -24,6 +25,14 @@ class UsuarioController extends Controller
     public function salvar(Request $request){
     	$data = $request->all();
       $data['senha'] = sha1($data['senha']);
+
+      if(!empty($data['image_perfil'])) {
+        $archive = (new IOController)->upload($request,'image_perfil','perfis');
+        if ($archive){
+          $data['image_perfil'] = $archive;
+        }
+      }
+      
       if(isset($data['flAtivo'])) $data['flAtivo'] =1;
 
     	$save = Usuarios::create($data);
@@ -44,9 +53,18 @@ class UsuarioController extends Controller
 
     public function atualizar(Request $request){
         $data = $request->all();
-        $data['senha'] = sha1($data['senha']);
-
         $update = Usuarios::find($data['id']);
+        if($update->senha != $data['senha']) {
+          $data['senha'] = sha1($data['senha']);
+        }
+
+
+        if(!empty($data['image_perfil'])) {
+          $archive = (new IOController)->upload($request,'image_perfil','perfis');
+          if ($archive){
+            $data['image_perfil'] = $archive;
+          }
+        }
 
         $update->update($data);
 
@@ -65,7 +83,7 @@ class UsuarioController extends Controller
     }
 
     public function deletar(Request $request, $id){
-        $delete = produtos::destroy($id);
+        $delete = Usuarios::destroy($id);
 
         if ($delete){
             $request->session()->put('msgs','Deletado com sucesso!');
@@ -74,5 +92,12 @@ class UsuarioController extends Controller
             $request->session()->put('msgs','Erro ao deletar!');
             return redirect()->back();
         }
+    }
+
+    public function profile(Request $request) {
+      $id = $request->session()->get('logado');
+
+      $data = Usuarios::find($id[0]['id']);
+      return view( 'sistemas.usuarios.profile', compact('data',$data) );
     }
 }

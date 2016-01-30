@@ -6,27 +6,28 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Editorias;
-use App\Jornais;
+use App\Assuntos;
+use App\Usuarios;
+use App\Clientes;
 
-class EditoriaController extends Controller
+class AssuntoController extends Controller
 {
     //
     public function listar(){
-        $data = Editorias::paginate();
-        return view('sistemas.editorias.listEditorias',compact('data',$data));
+        $data = Assuntos::paginate();
+        return view('sistemas.assuntos.listAssuntos',compact('data',$data));
     }
 
     public function criar(){
-      $jornais = Jornais::all();
-    	return view('sistemas.editorias.newEditorias',compact('jornais',$jornais));
+      $usuarios = Usuarios::all();
+      $clientes = Clientes::all();
+    	return view('sistemas.assuntos.newAssuntos',compact('usuarios',$usuarios,'clientes',$clientes));
     }
 
     public function salvar(Request $request){
     	$data = $request->all();
-
       if(isset($data['nome'])) $data['slug_name'] = str_slug($data['nome']);
-    	$save = Editorias::create($data);
+    	$save = Assuntos::create($data);
 
     	if ($save){
             $request->session()->put('msgs','Salvo com sucesso!');
@@ -38,21 +39,22 @@ class EditoriaController extends Controller
     }
 
     public function editar(Request $request,$id) {
-        $data = Editorias::find($id);
-        $jornais = Jornais::all();
-        return view('sistemas.editorias.editEditorias',compact('data',$data,'jornais',$jornais));
+        $data = Assuntos::find($id);
+        $usuarios = Usuarios::all();
+        $clientes = Clientes::all();
+        return view('sistemas.assuntos.editAssuntos',compact('data',$data,'usuarios',$usuarios,'clientes',$clientes));
     }
 
     public function atualizar(Request $request){
         $data = $request->all();
         if(isset($data['nome'])) $data['slug_name'] = str_slug($data['nome']);
-        $update = Editorias::find($data['id']);
+        $update = Assuntos::find($data['id']);
 
         $update->update($data);
 
         if ($update){
             $request->session()->put('msgs','Editado com sucesso!');
-            return redirect('/admin/editoria/');
+            return redirect('/admin/assunto/');
         } else {
             $request->session()->put('msgs','Erro ao editar!');
             return redirect()->back();
@@ -60,12 +62,12 @@ class EditoriaController extends Controller
     }
 
     public function ver(Request $request, $id){
-        $data = Editorias::find($id);
-        return view( 'sistemas.editorias.showEditorias', compact('data',$data) );
+        $data = Assuntos::find($id);
+        return view( 'sistemas.assuntos.showAssuntos', compact('data',$data) );
     }
 
     public function deletar(Request $request, $id){
-        $delete = Editorias::destroy($id);
+        $delete = Assuntos::destroy($id);
 
         if ($delete){
             $request->session()->put('msgs','Deletado com sucesso!');

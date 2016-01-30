@@ -23,19 +23,21 @@
 |
 */
 
-Route::get('/', function () {
-    $routeCollection = Route::getRoutes();
-    //dd($routeCollection);
-    return view('admin-lte.login');
-});
+
 
 Route::group(['middleware' => ['web']], function () {
     //
-
-    Route::group([ 'prefix'=>'/admin',['middleware' => [''] ]], function () {
-
+    Route::group(['middleware' => ['check_session']], function () {
+      Route::get('/auth/login','AuthController@login');
+      Route::post('/auth/auth','AuthController@auth');
+    });
+    Route::group([ 'prefix'=>'/admin','middleware' => 'authz'  ], function () {
+      Route::get('/auth/logout','AuthController@logout');
     	//Grupo de rotas
-    	Route::group(['prefix'=>'/usuario',['middleware' => ['']]], function () {
+    	Route::group(['prefix'=>'/usuario'], function () {
+
+        Route::get('/profile','UsuarioController@profile');
+        Route::get('/profile/{id}/editar','UsuarioController@profileEditar');
 
     		Route::get('/','UsuarioController@listar');
     		Route::get('/criar','UsuarioController@criar');
@@ -47,9 +49,12 @@ Route::group(['middleware' => ['web']], function () {
     		Route::post('/atualizar','UsuarioController@atualizar');
     		Route::post('/salvar','UsuarioController@salvar');
 
+        Route::get('/profile','UsuarioController@profile');
+        Route::get('/profile/{id}/editar','UsuarioController@profileEditar');
+
     	});
 
-      Route::group(['prefix'=>'/status',['middleware' => ['']]], function () {
+      Route::group(['prefix'=>'/status'], function () {
 
     		Route::get('/','StatusController@listar');
     		Route::get('/criar','StatusController@criar');
@@ -63,7 +68,21 @@ Route::group(['middleware' => ['web']], function () {
 
     	});
 
-      Route::group(['prefix'=>'/jornal',['middleware' => ['']]], function () {
+      Route::group(['prefix'=>'/fonte'], function () {
+
+    		Route::get('/','FonteController@listar');
+    		Route::get('/criar','FonteController@criar');
+
+    		Route::get('/{id}','FonteController@ver');
+    		Route::get('/{id}/deletar','FonteController@deletar');
+    		Route::get('/{id}/editar','FonteController@editar');
+
+    		Route::post('/atualizar','FonteController@atualizar');
+    		Route::post('/salvar','FonteController@salvar');
+
+    	});
+
+      Route::group(['prefix'=>'/jornal'], function () {
 
     		Route::get('/','JornalController@listar');
     		Route::get('/criar','JornalController@criar');
@@ -77,7 +96,7 @@ Route::group(['middleware' => ['web']], function () {
 
     	});
 
-      Route::group(['prefix'=>'/editoria',['middleware' => ['']]], function () {
+      Route::group(['prefix'=>'/editoria'], function () {
 
     		Route::get('/','EditoriaController@listar');
     		Route::get('/criar','EditoriaController@criar');
@@ -88,6 +107,34 @@ Route::group(['middleware' => ['web']], function () {
 
     		Route::post('/atualizar','EditoriaController@atualizar');
     		Route::post('/salvar','EditoriaController@salvar');
+
+    	});
+
+      Route::group(['prefix'=>'/assunto'], function () {
+
+    		Route::get('/','AssuntoController@listar');
+    		Route::get('/criar','AssuntoController@criar');
+
+    		Route::get('/{id}','AssuntoController@ver');
+    		Route::get('/{id}/deletar','AssuntoController@deletar');
+    		Route::get('/{id}/editar','AssuntoController@editar');
+
+    		Route::post('/atualizar','AssuntoController@atualizar');
+    		Route::post('/salvar','AssuntoController@salvar');
+
+    	});
+
+      Route::group(['prefix'=>'/cliente'], function () {
+
+    		Route::get('/','ClienteController@listar');
+    		Route::get('/criar','ClienteController@criar');
+
+    		Route::get('/{id}','ClienteController@ver');
+    		Route::get('/{id}/deletar','ClienteController@deletar');
+    		Route::get('/{id}/editar','ClienteController@editar');
+
+    		Route::post('/atualizar','ClienteController@atualizar');
+    		Route::post('/salvar','ClienteController@salvar');
 
     	});
 

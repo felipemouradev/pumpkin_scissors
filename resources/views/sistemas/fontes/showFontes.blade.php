@@ -4,22 +4,13 @@
   <div class='col-md-10'>
     <div class='box'>
       <div class='box-header'>
-        <h3 class='box-title'>Editorias</h3>
+        <h3 class='box-title'>Fontes</h3>
       </div>
       <!-- /.box-header -->
       <div class='box-body'>
         <table class='table table-condensed'>
           <tbody>
-          <tr>
-            <th style='width: 10px'>Codigo</th>
-            <th>Nome</th>
-            <th>Jornal</th>
-          </tr>
-          <tr>
-            <td>{{ $data->id }}</td>
-            <td>{{ $data->nome }} </td>
-            <td>{{ $data->jornal->nome}}</td>
-          </tr>
+          <tr><th style='width: 10px'>Codigo</th><th>Nome</th><th>Slug_name</th> </tr><tr><td>{{ $data->id }} </td><td>{{ $data->nome }} </td><td>{{ $data->slug_name }} </td></tr>
         </tbody></table>
       </div>
       <!-- /.box-body -->

@@ -33,8 +33,8 @@
                     <input type='text' class='form-control' name='email' placeholder='Digite email' value='{{ old('email') }}'>
                 </div>
                 <div class='form-group'>
-                    <label for='exampleInput'>Image_perfil</label>
-                    <input type='text' class='form-control' name='image_perfil' placeholder='Digite image_perfil' value='{{ old('image_perfil') }}'>
+                    <label for='exampleInput'>Imagem Perfil</label>
+                    <input type='file' class='form-control' name='image_perfil' value='{{ old('image_perfil') }}'>
                 </div>
                 <div class='form-group'>
                     <label for='exampleInput'>Ativar/Desativar</label>

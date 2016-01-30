@@ -2,7 +2,7 @@
 <header class="main-header">
 
   <!-- Logo -->
-  <a href="/admin/fornecedor/" class="logo"><b>Pumpkin</b> Scissors </a>
+  <a href="/admin/usuario/" class="logo"><b>Pumpkin</b> Scissors </a>
 
   <!-- Header Navbar -->
   <nav class="navbar navbar-static-top" role="navigation">
@@ -23,28 +23,34 @@
           <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <!-- The user image in the navbar-->
-            <img src="{{ asset("/bower_components/admin-lte/dist/img/avatar04.png") }}" class="user-image" alt="User Image"/>
+            @if(Session::get('logado.0.image_perfil'))
+            <img src="{{ asset(Session::get('logado.0.image_perfil')) }}" class="user-image" alt="User Image"/>
+            @else
+            <img src="{{ asset("/bower_components/admin-lte/dist/img/avatar04.png") }}" class="user-image" alt="User Image" />
+            @endif
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-            <span class="hidden-xs"> LOGIN <!-- {{ strtoupper(Session::get('usuario.login'))}} --></span>
+            <span class="hidden-xs"> {{ strtoupper(Session::get('logado.0.login'))}} </span>
           </a>
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->
             <li class="user-header">
+              @if(Session::get('logado.0.image_perfil'))
+              <img src="{{ asset(Session::get('logado.0.image_perfil')) }}" class="img-circle" alt="User Image"/>
+              @else
               <img src="{{ asset("/bower_components/admin-lte/dist/img/avatar04.png") }}" class="img-circle" alt="User Image" />
+              @endif
               <p>
-                LOGIN
-                <!-- {{ strtoupper(Session::get('usuario.login'))}} - FUNÇÃO -->
-                <small>Member since Nov. 2012</small>
+              {{ strtoupper(Session::get('logado.0.login'))}}
               </p>
             </li>
 
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                <a href="/admin/usuario/profile" class="btn btn-default btn-flat">Profile</a>
               </div>
               <div class="pull-right">
-                <a href="/admin/logoff" class="btn btn-default btn-flat">Sign out</a>
+                <a href="/admin/auth/logout" class="btn btn-default btn-flat">Sign out</a>
               </div>
             </li>
           </ul>

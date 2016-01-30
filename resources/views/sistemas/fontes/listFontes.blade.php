@@ -8,7 +8,7 @@
   @endif
   <div class='box'>
     <div class='box-header with-border'>
-      <h3 class='box-title'>Lista de Usuarios</h3>
+      <h3 class='box-title'>Lista de Fontes</h3>
     </div>
 
     <div class='box-body .col-sm-12 table-responsive'>
@@ -18,25 +18,17 @@
             <tr>
               <th style='width: 10px'>Código</th>
               <th>Nome</th>
-              <th>Login</th>
-              <th>Email</th>
-              <th>Image_perfil</th>
-              <th>FlAtivo</th>
               <th>Ações</th>
             </tr>
         </tbody>
         @foreach ($data as $k )
             <tr>
               <td>{{ $k->id }}</td>
-              <td><a href='/admin/usuario/{{ $k->id }}'>{{ $k->nome }}</a></td>
-              <td>{{ $k->login }}</td>
-              <td>{{ $k->email }}</td>
-              <td>{{ $k->image_perfil }}</td>
-              <td>{{ $k->flAtivo }}</td>
+              <td><a href='/admin/fonte/{{ $k->id }}'>{{ $k->nome }}</a></td>
               <td>
-                  <a href='/admin/usuario/{{ $k->id }}'><span class='badge bg-green'>Ver</span></a>
-                  <a href='/admin/usuario/{{ $k->id }}/editar'><span class='badge bg-yellow'>Editar</span></a>
-                  <a href='/admin/usuario/{{ $k->id }}/deletar'><span class='badge bg-red'>Excluir</span></a>
+                  <a href='/admin/fonte/{{ $k->id }}'><span class='badge bg-green'>Ver</span></a>
+                  <a href='/admin/fonte/{{ $k->id }}/editar'><span class='badge bg-yellow'>Editar</span></a>
+                  <a href='/admin/fonte/{{ $k->id }}/deletar'><span class='badge bg-red'>Excluir</span></a>
               </td>
             </tr>
             @endforeach
