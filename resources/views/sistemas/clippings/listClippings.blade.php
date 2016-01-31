@@ -35,7 +35,7 @@
           <td>{{ $k->data_clipping }}</td>
           <td>{{ $k->centimetragem }}</td>
           <td>{{ $k->type }}</td>
-          <td>{{ $k->jornal_id }}</td>
+          <td>{{ $k->jornal->nome }}</td>
           <td>{{ $k->editoria->nome }}</td>
           <td>{{ $k->fonte->nome }}</td>
           <td>{{ $k->status->nome }}</td>
