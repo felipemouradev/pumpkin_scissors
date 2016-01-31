@@ -145,7 +145,7 @@ class ClippingController extends Controller
             $data[$i]['assunto_id'] = $insertAssunto[$i]->id;
           }
         }
-        dd(count($request->file('image_clipping')));
+        //dd(count($request->file('image_clipping')));
         if($i<=count($request->file('image_clipping'))) {
           $file = $request->file('image_clipping')[$i];
           $nameOriginal = $file->getClientOriginalName();
