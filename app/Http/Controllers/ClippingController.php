@@ -88,7 +88,7 @@ class ClippingController extends Controller
                 Clippings::getIdBySlug($array_clipping[$count]['jornal'],'Jornais'),
                 Clippings::getIdBySlug($array_clipping[$count]['editoria'],'Editorias')
               );
-              $editoria = (!is_numeric($editoria)) ? $editoria." no arquivo ->".$nameOriginal : $editoria;
+              $editoria = (!is_numeric($editoria)) ? $editoria." no arquivo ->".$nameOriginal : Clippings::getIdBySlug($array_clipping[$count]['editoria'],'Editorias');
 
               $fonte = Clippings::getIdBySlug($array_clipping[$count]['fontes'],'Fontes');
               $fonte = (!is_numeric($fonte)) ? $fonte." no arquivo ->".$nameOriginal : $fonte;
@@ -121,6 +121,7 @@ class ClippingController extends Controller
 
     public function transacClipping(Request $request, array $data){
       $count_sucess = 0;
+      //dd($data);
       //$cliente = str_slug(Clippings::getClienteNameByID($data[0]['cliente_id']));
       $base_path = public_path().DIRECTORY_SEPARATOR.'clippings'.DIRECTORY_SEPARATOR."cemar".DIRECTORY_SEPARATOR.date('Y-m-d');
       $fake_path = "/clippings/cemar/".date("Y-m-d")."/";
@@ -146,12 +147,12 @@ class ClippingController extends Controller
           }
         }
         //dd(count($request->file('image_clipping')));
-        if($i<=count($request->file('image_clipping'))) {
+        if($i<count($request->file('image_clipping'))) {
           $file = $request->file('image_clipping')[$i];
           $nameOriginal = $file->getClientOriginalName();
           $ext = $file->getClientOriginalExtension();
 
-          $archive = time().".".$ext;
+          $archive = time()+rand(1,200).".".$ext;
           //dd($file);
           $move[$i] = $file->move($base_path,$archive);
 
