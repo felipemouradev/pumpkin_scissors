@@ -7,6 +7,7 @@ use App\Jornais;
 use App\Editorias;
 use App\Status;
 use App\Fontes;
+use App\Clientes;
 
 class Clippings extends Model
 {
@@ -27,6 +28,10 @@ class Clippings extends Model
 
     public function fonte(){
        return $this->belongsTo('App\Fontes', 'fonte_id', 'id');
+    }
+
+    public function cliente(){
+       return $this->belongsTo('App\Clientes', 'cliente_id', 'id');
     }
 
     public static function getIdBySlug($slug,$model_name) {
