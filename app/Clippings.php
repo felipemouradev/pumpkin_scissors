@@ -34,6 +34,10 @@ class Clippings extends Model
        return $this->belongsTo('App\Clientes', 'cliente_id', 'id');
     }
 
+    public function usuario(){
+       return $this->belongsTo('App\Usuarios', 'usuario_id', 'id');
+    }
+
     public static function getIdBySlug($slug,$model_name) {
       $model = "App\\".$model_name;
       //dd($model);
