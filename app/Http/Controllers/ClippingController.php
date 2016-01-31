@@ -121,9 +121,9 @@ class ClippingController extends Controller
 
     public function transacClipping(Request $request, array $data){
       $count_sucess = 0;
-      $cliente = str_slug(Clippings::getClienteNameByID($data[0]['cliente_id']));
-      $base_path = public_path().DIRECTORY_SEPARATOR.'clippings'.DIRECTORY_SEPARATOR.$cliente.DIRECTORY_SEPARATOR.date('Y-m-d');
-      $fake_path = "/clippings/".$cliente."/".date("Y-m-d")."/";
+      //$cliente = str_slug(Clippings::getClienteNameByID($data[0]['cliente_id']));
+      $base_path = public_path().DIRECTORY_SEPARATOR.'clippings'.DIRECTORY_SEPARATOR."cemar".DIRECTORY_SEPARATOR.date('Y-m-d');
+      $fake_path = "/clippings/cemar/".date("Y-m-d")."/";
       //dd($data);
 
       for($i=0;$i<count($data);$i++) {
