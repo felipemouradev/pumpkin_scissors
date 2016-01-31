@@ -31,6 +31,7 @@ Route::group(['middleware' => ['web']], function () {
       Route::get('/auth/login','AuthController@login');
       Route::post('/auth/auth','AuthController@auth');
     });
+
     Route::group([ 'prefix'=>'/admin','middleware' => 'authz'  ], function () {
       Route::get('/auth/logout','AuthController@logout');
     	//Grupo de rotas
@@ -135,6 +136,20 @@ Route::group(['middleware' => ['web']], function () {
 
     		Route::post('/atualizar','ClienteController@atualizar');
     		Route::post('/salvar','ClienteController@salvar');
+
+    	});
+
+      Route::group(['prefix'=>'/clipping'], function () {
+
+    		Route::get('/','ClippingController@listar');
+    		Route::get('/criar','ClippingController@criar');
+
+    		Route::get('/{id}','ClippingController@ver');
+    		Route::get('/{id}/deletar','ClippingController@deletar');
+    		Route::get('/{id}/editar','ClippingController@editar');
+
+    		Route::post('/atualizar','ClippingController@atualizar');
+    		Route::post('/salvar','ClippingController@salvar');
 
     	});
 
