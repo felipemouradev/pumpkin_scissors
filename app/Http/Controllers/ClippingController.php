@@ -18,15 +18,33 @@ class ClippingController extends Controller
 {
     //
     public function listar(){
-        $data = Clippings::paginate();
+        $data = Clippings::paginate(10);
         return view('sistemas.clippings.listClippings',compact('data',$data));
     }
+    public function escolhe() {
+      $clientes = Clientes::all();
+      return view('sistemas.clippings.newClippingsChoiceClient',compact('clientes',$clientes));
+    }
 
-    public function criar(){
-      $assuntos = Assuntos::all();
+    public function criar(Request $request){
+
+      $data = $request->all();
+
+      if (!empty($data)) $request->session()->put('params',$data);
+
+      if (empty($data) && empty($request->session()->get('params'))) {
+        $request->session()->put('status','Selecione primeiro o cliente, o numero de clipping e o tipo deles!');
+        return redirect('/admin/clipping/escolhe');
+      }
+      $new_data = $request->session()->get('params');
+      //dd($new_data);
+      $assuntos = Assuntos::where('cliente_id',$new_data['cliente_id'])->get();
+
+      //dd($assuntos);
 
     	return view('sistemas.clippings.newClippings',compact('assuntos',$assuntos));
     }
+
     public function procMsgErrors($iterator = null) {
 
       if($iterator==null) return "Favor preencha a formulario";
@@ -38,9 +56,17 @@ class ClippingController extends Controller
 
         foreach ($k as $key => $value) {
 
+          if($key == "data_clipping")  {
+            $exp = explode("-",$value);
+            if (count($exp)!=3) {
+              $msgError[$count][] = [
+                $key => $value,
+              ];
+            }
+          }
+
           if($key== "data_clipping" || $key =="assunto" || $key == "image_clipping" || $key == "file_clipping") continue;
           if(!is_numeric($value) ){
-            //dd($key);
             $msgError[$count][] = [
               $key => $value,
             ];
@@ -48,12 +74,11 @@ class ClippingController extends Controller
         }
         $count++;
       }
-
-      //dd($msgError);
       return $msgError;
     }
 
-    public function uploadClipping(Request $request,$file,$folder) {
+    public function uploadClipping(Request $request) {
+        $file = 'image_clipping';
         if ($request->hasFile($file)) {
             $count = 0;
 
@@ -100,10 +125,11 @@ class ClippingController extends Controller
               $centimetragem = (!is_numeric($centimetragem)) ? $centimetragem." não é numero valido para centimetragem - no arquivo ->".$nameOriginal : $centimetragem;
 
               $assunto = (isset($array_clipping[$count]['assunto']) && $array_clipping[$count]['assunto']!=null) ? $array_clipping[$count]['assunto'] : $array_clipping[$count]['assunto_id'];
+              $data_clipping = (Clippings::formatDataClipping($array_clipping[$count]['data_clipping'])) ? Clippings::formatDataClipping($array_clipping[$count]['data_clipping']) : "data invalida ";
 
               $array_translate[] = [
                 'assunto'=> $assunto,
-                'data_clipping' =>Clippings::formatDataClipping($array_clipping[$count]['data_clipping']),
+                'data_clipping' =>$data_clipping,
                 'jornal_id' => $jornal,
                 'editoria_id' => $editoria,
                 'fonte_id' => $fonte,
@@ -122,9 +148,9 @@ class ClippingController extends Controller
     public function transacClipping(Request $request, array $data){
       $count_sucess = 0;
       //dd($data);
-      //$cliente = str_slug(Clippings::getClienteNameByID($data[0]['cliente_id']));
-      $base_path = public_path().DIRECTORY_SEPARATOR.'clippings'.DIRECTORY_SEPARATOR."cemar".DIRECTORY_SEPARATOR.date('Y-m-d');
-      $fake_path = "/clippings/cemar/".date("Y-m-d")."/";
+      $cliente = str_slug(Clippings::getClienteNameByID($data[0]['cliente_id']));
+      $base_path = public_path().DIRECTORY_SEPARATOR.'clippings'.DIRECTORY_SEPARATOR.$cliente.DIRECTORY_SEPARATOR.date('Y-m-d');
+      $fake_path = "/clippings/".$cliente."/".date("Y-m-d")."/";
       //dd($data);
 
       for($i=0;$i<count($data);$i++) {
@@ -179,7 +205,7 @@ class ClippingController extends Controller
     public function salvar(Request $request){
     	$data = $request->all();
 
-      $dataFormat2 = $this->uploadClipping($request,'image_clipping','clipping/'.date('Y-m-d').'/');
+      $dataFormat2 = $this->uploadClipping($request);
       //$dataF = array_merge($dataFormat2,$dataFormat);
       //dd($dataFormat2);
       $errors = $this->procMsgErrors($dataFormat2);
@@ -192,7 +218,9 @@ class ClippingController extends Controller
       $save = $this->transacClipping($request,$dataFormat2);
       if ($save){
           $request->session()->put('success','Salvo com sucesso!');
-          return redirect()->back();
+          $request->session()->forget('params');
+          $request->session()->forget('status');
+          return redirect('/admin/clipping/escolhe');
       } else {
           $request->session()->put('success','Erro ao salvar!');
           return redirect()->back();

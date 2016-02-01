@@ -28,7 +28,7 @@
 Route::group(['middleware' => ['web']], function () {
     //
     Route::group(['middleware' => ['check_session']], function () {
-      Route::get('/auth/login','AuthController@login');
+      Route::get('/','AuthController@login');
       Route::post('/auth/auth','AuthController@auth');
     });
 
@@ -141,8 +141,9 @@ Route::group(['middleware' => ['web']], function () {
 
       Route::group(['prefix'=>'/clipping'], function () {
 
+        Route::get('/escolhe','ClippingController@escolhe');
     		Route::get('/','ClippingController@listar');
-    		Route::get('/criar','ClippingController@criar');
+    		Route::any('/criar','ClippingController@criar');
 
     		Route::get('/{id}','ClippingController@ver');
     		Route::get('/{id}/deletar','ClippingController@deletar');

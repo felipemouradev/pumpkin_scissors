@@ -1,36 +1,36 @@
 
   @extends('admin-lte.dashboard')
   @section('content')
-
+  <?php $params = Session::get('params'); ?>
   <div class='row'>
-      <div class='col-md-10'>
-      @if(Session::has('success'))
-        <div class='alert alert-success'>
-          {{ Session::get('success')}}
-        </div>
-      {{ Session::forget('success') }}
+    <div class='col-md-10'>
+    @if(Session::has('success'))
+      <div class='alert alert-success'>
+        {{ Session::get('success')}}
+      </div>
+    {{ Session::forget('success') }}
+    @endif
+    @if (Session::has('status'))
+    <?php
+      $erros = Session::get('status');
+      $count = 0;
+    ?>
+    <div class='alert alert-danger'>
+    Ops! algo deu errado! veja abaixo o que aconteceu </br>
+    @foreach ($erros as $level0)
+
+      @if(!is_array($level0))
+        {{ $level0 }}
+      @else
+
+      Clipping #{{ $count }}
+        @foreach($level0 as $level1)
+         <li>{{ $level1[key($level1)] }}</li>
+        @endforeach
       @endif
-      @if (Session::has('status'))
-      <?php
-        $erros = Session::get('status');
-        $count = 0;
-      ?>
-      <div class='alert alert-danger'>
-      Ops! algo deu errado! veja abaixo o que aconteceu </br>
-      @foreach ($erros as $level0)
-
-        @if(!is_array($level0))
-          {{ $level0 }}
-        @else
-
-        Clipping #{{ $count }}
-          @foreach($level0 as $level1)
-           <li>{{ $level1[key($level1)] }}</li>
-          @endforeach
-        @endif
-        <?php $count++; ?>
-      @endforeach
-  </div>
+      <?php $count++; ?>
+    @endforeach
+    </div>
 
   {{ Session::forget('status') }}
   @endif
@@ -41,13 +41,13 @@
       </div><!-- /.box-header -->
       <!-- form start -->
       <form action='/admin/clipping/salvar' method='POST' enctype='multipart/form-data'>
-        @for($i=0; $i< 3; $i++)
+        @for($i=0; $i < $params['num_clipping']; $i++)
         <div class='box-body'>
           <div class="form-group">
             <label>Clipping #{{$i}}</label>
           </div>
           <div class="form-group">
-            <label>Jornal/Editoria</label>
+            <label>Selecione um Assunto existente</label>
             <select name="assunto_id[]" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="0" aria-hidden="true">
               @foreach($assuntos as $assunto)
               <option value="{{ $assunto->id }}">{{ strtoupper($assunto->nome) }}</option>
@@ -70,7 +70,8 @@
           </div>
 
           <input type="hidden" name="usuario_id[]" value="{{ Session::get('logado.0.id') }}">
-          <input type="hidden" name="cliente_id[]" value="1">
+          <input type="hidden" name="cliente_id[]" value="{{ $params['cliente_id']}}">
+          <input type="hidden" name="type[]" value="{{ $params['type']}}">
 
         </div>
         @endfor

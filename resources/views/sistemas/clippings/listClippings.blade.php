@@ -16,10 +16,10 @@
         <table class='table table-bordered'>
           <tbody>
             <tr>
-              <th style='width: 10px'>Código</th>
-              <th>Data_clipping</th>
+              <th>Código</th>
+              <th width="15%">Data</th>
               <th>Centimetragem</th>
-              <th>Type</th>
+              <th>Tipo</th>
               <th>Jornal</th>
               <th>Editoria</th>
               <th>Fonte</th>
@@ -34,13 +34,13 @@
           <td>{{ $k->id }}</td>
           <td>{{ $k->data_clipping }}</td>
           <td>{{ $k->centimetragem }}</td>
-          <td>{{ $k->type }}</td>
+          <td>@if($k->type == "n") Notícia @endif</td>
           <td>{{ $k->jornal->nome }}</td>
           <td>{{ $k->editoria->nome }}</td>
           <td>{{ $k->fonte->nome }}</td>
           <td>{{ $k->status->nome }}</td>
-          <td>{{ $k->cliente->nome }}</td>
-          <td>{{ $k->usuario->nome }}</td>
+          <td><a href='/admin/cliente/{{ $k->cliente->id }}'>{{ $k->cliente->nome }}</a></td>
+          <td><a href='/admin/usuario/{{ $k->usuario->id }}'>{{ $k->usuario->nome }}</a></td>
           <td>
             <a href='/admin/clipping/{{ $k->id }}'><span class='badge bg-green'>Ver</span></a>
             <a href='/admin/clipping/{{ $k->id }}/editar'><span class='badge bg-yellow'>Editar</span></a>

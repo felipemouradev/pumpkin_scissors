@@ -14,7 +14,7 @@ class CreateClippingsTable extends Migration
     {
         Schema::create('clippings', function (Blueprint $table) {
             $table->increments('id');
-            $table->dateTime('data_clipping');
+            $table->date('data_clipping');
             $table->double('centimetragem');
             $table->string('type')->default('n');
             $table->string('file_image',2083);

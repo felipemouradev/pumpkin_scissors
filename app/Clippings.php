@@ -53,6 +53,7 @@ class Clippings extends Model
 
     public static function formatDataClipping($data) {
       $exp = explode('.',$data);
+      if (count($exp)!=3) return false;
       $exp[2] = "2".str_pad($exp[2], 3, "0", STR_PAD_LEFT);
       $new_data = $exp[2]."-".$exp[1]."-".$exp[0];
 
@@ -89,6 +90,7 @@ class Clippings extends Model
     }
     public static function getClienteNameByID($id) {
       $find = Clientes::select('nome')->where('id',$id)->get()->toArray();
+      //dd($find);
       return $find[0]["nome"];
     }
 }

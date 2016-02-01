@@ -20,13 +20,17 @@ class AuthzMiddleware
 
         if (empty($session)) {
           $request->session()->put('status','É preciso fazer login para continuar');
-          return redirect('/auth/login');
+          return redirect('/');
         }
 
         if(time() > $session['expiration_session']) {
           $request->session()->put('status','Sessão expirado, favor faça login novamente');
-          return redirect('/auth/login');
+          return redirect('/');
+        } else {
+          $session['expiration_session'] = time()+10*60;
         }
+
+
 
         if ($slug[0]=="auth" && !empty($session) && time < $session['expiration_session'] ) return redirect('/admin/usuario');
 
