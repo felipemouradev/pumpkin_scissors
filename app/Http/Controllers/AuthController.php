@@ -38,7 +38,7 @@ class AuthController extends Controller
 
     public function logout(Request $request) {
       $request->session()->forget('logado');
-      return redirect('/auth/login');
+      return redirect('/');
     }
     public function login(){
       return view('admin-lte.login');
