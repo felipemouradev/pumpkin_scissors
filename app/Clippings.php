@@ -64,7 +64,7 @@ class Clippings extends Model
     public static function getIdBySlugEditoria($jornal_id,$slug) {
       $search = Editorias::select('id')->where('jornal_id',$jornal_id)->where('slug_name',$slug)->get()->toArray();
       //dd($search);
-      return (!empty($search[0]['id'])) ? $search[0]['id'] : $slug." não encontrado em ".$model_name;
+      return (!empty($search[0]['id'])) ? $search[0]['id'] : $slug." não pertence ao jornal";
     }
 
     public static function formatDataClipping($data) {
