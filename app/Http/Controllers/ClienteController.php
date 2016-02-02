@@ -27,8 +27,11 @@ class ClienteController extends Controller
     	$save = Clientes::create($data);
 
     	if ($save){
-            $request->session()->put('msgs','Salvo com sucesso!');
-            return redirect()->back();
+            $save_types = Clientes::saveTypes($save->id,$request->session()->get('logado.0.id'));
+            if($save_types) {
+              $request->session()->put('msgs','Salvo com sucesso!');
+              return redirect()->back();
+            }
         } else {
             $request->session()->put('msgs','Erro ao salvar!');
             return redirect()->back();
@@ -42,7 +45,7 @@ class ClienteController extends Controller
 
     public function atualizar(Request $request){
         $data = $request->all();
-        
+
         $update = Clientes::find($data['id']);
 
         $update->update($data);

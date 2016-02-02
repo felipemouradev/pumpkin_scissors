@@ -32,7 +32,7 @@
         @foreach ($data as $k )
         <tr>
           <td>{{ $k->id }}</td>
-          <td>{{ $k->data_clipping }}</td>
+          <td>{{ date('d/m/Y',strtotime($k->data_clipping)) }}</td>
           <td>{{ $k->centimetragem }}</td>
           <td>@if($k->type == "n") Notícia @endif</td>
           <td>{{ $k->jornal->nome }}</td>

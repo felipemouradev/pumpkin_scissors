@@ -10,13 +10,17 @@
       </div>
     {{ Session::forget('success') }}
     @endif
-    @if (Session::has('status'))
+    @if (Session::get('status'))
     <?php
       $erros = Session::get('status');
+
+      //dd($erros);
       $count = 0;
     ?>
     <div class='alert alert-danger'>
     Ops! algo deu errado! veja abaixo o que aconteceu </br>
+    @if(!is_array($erros)) {{ "# ".$erros }}
+    @else
     @foreach ($erros as $level0)
 
       @if(!is_array($level0))
@@ -30,10 +34,10 @@
       @endif
       <?php $count++; ?>
     @endforeach
+    @endif
     </div>
-
-  {{ Session::forget('status') }}
-  @endif
+    {{ Session::forget('status') }}
+    @endif
   <!-- general form elements -->
     <div class='box box-primary'>
       <div class='box-header with-border'>

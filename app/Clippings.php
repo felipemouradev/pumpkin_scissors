@@ -8,12 +8,17 @@ use App\Editorias;
 use App\Status;
 use App\Fontes;
 use App\Clientes;
+use App\Assuntos;
 
 class Clippings extends Model
 {
     //
     protected $guarded = ['id'];
 
+    public static function getJornalByEditoria($editoria_id){
+      $select = Editorias::select('jornal_id')->find($editoria_id)->toArray();
+      return $select['jornal_id'];
+    }
     public function editoria(){
        return $this->belongsTo('App\Editorias', 'editoria_id', 'id');
     }
@@ -36,6 +41,10 @@ class Clippings extends Model
 
     public function usuario(){
        return $this->belongsTo('App\Usuarios', 'usuario_id', 'id');
+    }
+
+    public function assunto() {
+       return $this->belongsTo('App\Assuntos', 'assunto_id', 'id');
     }
 
     public static function getIdBySlug($slug,$model_name) {

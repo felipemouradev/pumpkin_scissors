@@ -37,10 +37,7 @@ class ClippingController extends Controller
         return redirect('/admin/clipping/escolhe');
       }
       $new_data = $request->session()->get('params');
-      //dd($new_data);
       $assuntos = Assuntos::where('cliente_id',$new_data['cliente_id'])->get();
-
-      //dd($assuntos);
 
     	return view('sistemas.clippings.newClippings',compact('assuntos',$assuntos));
     }
@@ -229,24 +226,26 @@ class ClippingController extends Controller
 
     public function editar(Request $request,$id) {
         $data = Clippings::find($id);
-        $jornais = Jornais::all();
-        return view('sistemas.clippings.editClippings',compact('data',$data,'jornais',$jornais));
+
+        $editorias = Editorias::all();
+        $status = Status::all();
+        $fontes = Fontes::all();
+        return view('sistemas.clippings.editClippings',compact('data',$data,'editorias',$editorias,'status',$status,'fontes',$fontes));
     }
 
     public function atualizar(Request $request){
-        // $data = $request->all();
-        // if(isset($data['nome'])) $data['slug_name'] = str_slug($data['nome']);
-        // $update = Clippings::find($data['id']);
-        //
-        // $update->update($data);
-        //
-        // if ($update){
-        //     $request->session()->put('msgs','Editado com sucesso!');
-        //     return redirect('/admin/clipping/');
-        // } else {
-        //     $request->session()->put('msgs','Erro ao editar!');
-        //     return redirect()->back();
-        // }
+        $data = $request->all();
+        $update = Clippings::find($data['id']);
+        $data['jornal_id'] = Clippings::getJornalByEditoria($data['editoria_id']);
+        $update->update($data);
+
+        if ($update){
+            $request->session()->put('msgs','Editado com sucesso!');
+            return redirect('/admin/clipping/');
+        } else {
+            $request->session()->put('msgs','Erro ao editar!');
+            return redirect()->back();
+        }
     }
 
     public function ver(Request $request, $id){
@@ -255,11 +254,15 @@ class ClippingController extends Controller
     }
 
     public function deletar(Request $request, $id){
-        $delete = Clippings::destroy($id);
+        $delete = Clippings::find($id);
 
         if ($delete){
-            $request->session()->put('msgs','Deletado com sucesso!');
-            return redirect()->back();
+            $del = unlink (public_path().$delete->file_image);
+            $delete = Clippings::destroy($id);
+            if($del && $delete){
+              $request->session()->put('msgs','Deletado com sucesso!');
+              return redirect()->back();
+            }
         } else {
             $request->session()->put('msgs','Erro ao deletar!');
             return redirect()->back();

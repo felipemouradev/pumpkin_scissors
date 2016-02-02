@@ -19,10 +19,10 @@ class IOController extends Controller
         $full_path = $base_folder.DIRECTORY_SEPARATOR.$folder;
         $ext = $request->file($name)->getClientOriginalExtension();
         $nameOriginal = $request->file($name)->getClientOriginalName();
-        $exp = explode('.',$nameOriginal);
-        $archive = str_slug($exp[0]).".".$ext;
+        //$exp = array_reverse(explode('.',$nameOriginal));
+        $archive = time().".".$ext;
         //dd($archive);
-        $move = $request->file($name)->move($full_path, $nameOriginal);
+        $move = $request->file($name)->move($full_path, $archive);
 
         if($move) {
           return $folder.'/'.$archive;

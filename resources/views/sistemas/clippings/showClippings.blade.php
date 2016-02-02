@@ -10,8 +10,41 @@
       <div class='box-body'>
         <table class='table table-condensed'>
           <tbody>
-          <tr><th style='width: 10px'>Codigo</th><th>Data_clipping</th><th>Centimetragem</th><th>Type</th><th>Jornal_id</th><th>Editoria_id</th><th>Fonte_id</th><th>Status_id</th><th>Usuario_id</th><th>Cliente_id</th> </tr><tr><td>{{ $data->id }} </td><td>{{ $data->data_clipping }} </td><td>{{ $data->centimetragem }} </td><td>{{ $data->type }} </td><td>{{ $data->jornal_id }} </td><td>{{ $data->editoria_id }} </td><td>{{ $data->fonte_id }} </td><td>{{ $data->status_id }} </td><td>{{ $data->usuario_id }} </td><td>{{ $data->cliente_id }} </td></tr>
-        </tbody></table>
+          <tr>
+            <th style='width: 10px'>Codigo</th>
+            <th>Assunto</th>
+            <th>Tipo</th>
+            <th>Clipping</th>
+          </tr>
+
+          <tr>
+            <td>{{ $data->id }}</td>
+            <td>{{ $data->assunto->nome }} </td>
+            <td>
+              <?php
+              switch($data->type) {
+                case($data->type == "n") :
+                  echo "Notícia";
+                    break;
+                case($data->type == "i") :
+                  echo "Informativo";
+                    break;
+                case($data->type == "pb") :
+                  echo "Publicidade";
+                    break;
+                case($data->type == "pp") :
+                  echo "Propaganda";
+                    break;
+              } ?>
+            </td>
+            <td><a href="{{$data->file_image}}">{{
+              date("d.m.y",strtotime($data->data_clipping))." - ".$data->jornal->nome." - " .$data->editoria->nome." - ".
+              $data->fonte->nome." - ".$data->status->nome." - ".$data->centimetragem
+            }}</a></td>
+
+          </tr>
+        </tbody>
+      </table>
       </div>
       <!-- /.box-body -->
     </div>

@@ -17,41 +17,58 @@
             <form action='/admin/clipping/atualizar' method='POST' enctype='multipart/form-data'>
               <div class='box-body'>
                 <div class='form-group'>
-                    <label for='exampleInput'>Data_clipping</label>
+                    <label for='exampleInput'><h2>Cliente: </label>
+                    <small>{{ $data->cliente->nome }}</small></h2>
+                </div>
+                <div class='form-group'>
+                    <label for='exampleInput'>Data</label>
                     <input type='text' class='form-control' name='data_clipping' placeholder='Digite data_clipping' value='{{ $data->data_clipping }}'>
                 </div>
+
+                <div class="form-group">
+                  <label>Tipo Clipping</label>
+                  <select name="type" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="0" aria-hidden="true">
+                    <option value="n" @if($data->type == "nn") selected @endif>Notícia</option>
+                    <option value="i" @if($data->type == "i") selected @endif>Informativo (ainda não funciona)</option>
+                    <option value="pb" @if($data->type == "pb") selected @endif>Publicidade (ainda não funciona)</option>
+                    <option value="pp" @if($data->type == "pp") selected @endif>Propaganda (ainda não funciona)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Jornal/Editoria</label>
+                  <select name="editoria_id" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="0" aria-hidden="true">
+                    @foreach($editorias as $editoria)
+                      <option value="{{ $editoria->id }}" @if($data->editoria_id == $editoria->id) {{ 'selected' }} @endif>{{ $editoria->jornal->nome." -> ".$editoria->nome }}</option>
+                    @endforeach
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Fonte</label>
+                  <select name="fonte_id" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="0" aria-hidden="true">
+                    @foreach($fontes as $fonte)
+                      <option value="{{ $fonte->id }}" @if($data->fonte_id == $fonte->id) {{ 'selected' }} @endif>{{ $fonte->nome }}</option>
+                    @endforeach
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Status</label>
+                  <select name="status_id" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="0" aria-hidden="true">
+                    @foreach($status as $s)
+                      <option value="{{ $s->id }}" @if($data->status_id == $s->id) {{ 'selected' }} @endif>{{ $s->nome }}</option>
+                    @endforeach
+                  </select>
+                </div>
+
                 <div class='form-group'>
                     <label for='exampleInput'>Centimetragem</label>
                     <input type='text' class='form-control' name='centimetragem' placeholder='Digite centimetragem' value='{{ $data->centimetragem }}'>
                 </div>
-                <div class='form-group'>
-                    <label for='exampleInput'>Type</label>
-                    <input type='text' class='form-control' name='type' placeholder='Digite type' value='{{ $data->type }}'>
-                </div>
-                <div class='form-group'>
-                    <label for='exampleInput'>Jornal_id</label>
-                    <input type='text' class='form-control' name='jornal_id' placeholder='Digite jornal_id' value='{{ $data->jornal_id }}'>
-                </div>
-                <div class='form-group'>
-                    <label for='exampleInput'>Editoria_id</label>
-                    <input type='text' class='form-control' name='editoria_id' placeholder='Digite editoria_id' value='{{ $data->editoria_id }}'>
-                </div>
-                <div class='form-group'>
-                    <label for='exampleInput'>Fonte_id</label>
-                    <input type='text' class='form-control' name='fonte_id' placeholder='Digite fonte_id' value='{{ $data->fonte_id }}'>
-                </div>
-                <div class='form-group'>
-                    <label for='exampleInput'>Status_id</label>
-                    <input type='text' class='form-control' name='status_id' placeholder='Digite status_id' value='{{ $data->status_id }}'>
-                </div>
-                <div class='form-group'>
-                    <label for='exampleInput'>Usuario_id</label>
-                    <input type='text' class='form-control' name='usuario_id' placeholder='Digite usuario_id' value='{{ $data->usuario_id }}'>
-                </div>
-                <div class='form-group'>
-                    <label for='exampleInput'>Cliente_id</label>
-                    <input type='text' class='form-control' name='cliente_id' placeholder='Digite cliente_id' value='{{ $data->cliente_id }}'>
-                </div><input type='hidden' value='{{ $data->clipping_id }}' name='clipping_id' >
+                <input type='hidden' value='{{ $data->id }}' name='id' >
+                <input type='hidden' value='{{ $data->cliente->id }}' name='cliente_id' >
+                <input type='hidden' value='{{ Session::get('logado.0.id') }}' name='usuario_id' >
+
               </div>
               <div class='box-footer'>
                 <button type='submit' class='btn btn-primary'>Salvar</button>
