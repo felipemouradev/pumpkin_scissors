@@ -55,9 +55,16 @@ class Clippings extends Model
     }
 
     public static function EditoriaBelongsToJornal($jornal_id,$editoria_id) {
-      $test = Editorias::where('jornal_id',$jornal_id)->where('id',$editoria_id)->count();
 
+      $test = Editorias::where('jornal_id',$jornal_id)->where('id',$editoria_id)->count();
+      //dd($jornal_id."--".$editoria_id);
       return ($test > 0) ? $test : "a editoria não pertence ao jornal";
+    }
+
+    public static function getIdBySlugEditoria($jornal_id,$slug) {
+      $search = Editorias::select('id')->where('jornal_id',$jornal_id)->where('slug_name',$slug)->get()->toArray();
+      //dd($search);
+      return (!empty($search[0]['id'])) ? $search[0]['id'] : $slug." não encontrado em ".$model_name;
     }
 
     public static function formatDataClipping($data) {

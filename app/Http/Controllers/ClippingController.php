@@ -18,7 +18,7 @@ class ClippingController extends Controller
 {
     //
     public function listar(){
-        $data = Clippings::paginate(10);
+        $data = Clippings::orderBy('id','DESC')->paginate(10);
         return view('sistemas.clippings.listClippings',compact('data',$data));
     }
     public function escolhe() {
@@ -127,7 +127,9 @@ class ClippingController extends Controller
 
               $editoria = Clippings::EditoriaBelongsToJornal(
                 Clippings::getIdBySlug($array_clipping[$count]['jornal'],'Jornais'),
-                Clippings::getIdBySlug($array_clipping[$count]['editoria'],'Editorias')
+                Clippings::getIdBySlugEditoria(
+                  Clippings::getIdBySlug($array_clipping[$count]['jornal'],'Jornais'),
+                  $array_clipping[$count]['editoria'])
               );
               $editoria = (!is_numeric($editoria)) ? $editoria." no arquivo ->".$nameOriginal : Clippings::getIdBySlug($array_clipping[$count]['editoria'],'Editorias');
 
