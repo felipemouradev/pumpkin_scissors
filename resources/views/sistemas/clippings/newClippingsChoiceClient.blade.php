@@ -69,9 +69,9 @@
             <select name="type" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="0" aria-hidden="true">
 
               <option value="n">Notícia</option>
-              <option value="i">Informativo (ainda não funciona)</option>
-              <option value="pb">Publicidade (ainda não funciona)</option>
-              <option value="pp">Propaganda (ainda não funciona)</option>
+              <option value="i">Informativo</option>
+              <option value="pb">Publicidade</option>
+              <option value="pp">Propaganda</option>
 
             </select>
           </div>
