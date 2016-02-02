@@ -34,7 +34,23 @@
           <td>{{ $k->id }}</td>
           <td>{{ date('d/m/Y',strtotime($k->data_clipping)) }}</td>
           <td>{{ $k->centimetragem }}</td>
-          <td>@if($k->type == "n") Notícia @endif</td>
+          <td>
+            <?php
+            switch($k->type) {
+              case($k->type == "n") :
+                echo "Notícia";
+                  break;
+              case($k->type == "i") :
+                echo "Informativo";
+                  break;
+              case($k->type == "pb") :
+                echo "Publicidade";
+                  break;
+              case($k->type == "pp") :
+                echo "Propaganda";
+                  break;
+            } ?>
+          </td>
           <td>{{ $k->jornal->nome }}</td>
           <td>{{ $k->editoria->nome }}</td>
           <td>{{ $k->fonte->nome }}</td>

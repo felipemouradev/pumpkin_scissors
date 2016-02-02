@@ -62,7 +62,7 @@ class ClippingController extends Controller
             }
           }
 
-          if($key== "data_clipping" || $key =="assunto" || $key == "image_clipping" || $key == "file_clipping") continue;
+          if($key== "data_clipping" || $key =="assunto" || $key == "image_clipping" || $key == "file_clipping" || $key == "type") continue;
           if(!is_numeric($value) ){
             $msgError[$count][] = [
               $key => $value,
@@ -72,6 +72,11 @@ class ClippingController extends Controller
         $count++;
       }
       return $msgError;
+    }
+
+    public function checkType($type){
+      if ($type != "n") return false;
+      return true;
     }
 
     public function uploadClipping(Request $request) {
@@ -89,19 +94,33 @@ class ClippingController extends Controller
               $archive = str_slug($exp[0]).".".$ext;
 
               $exp2 = explode(" - ",$nameOriginal);
-
-              $array_clipping[] = [
-                'assunto_id' => (!isset($data['assunto_id'][$count])) ? null : $data['assunto_id'][$count],
-                'assunto' => $data['assunto'][$count],
-                'cliente_id' => $data['cliente_id'][$count],
-                'data_clipping' => (!empty($exp2[0])) ? $exp2[0] : null,
-                'jornal' => (!empty($exp2[1])) ? str_slug($exp2[1]) : null,
-                'editoria' => (!empty($exp2[2])) ? str_slug($exp2[2]) : null,
-                'fontes' => (!empty($exp2[3])) ? str_slug($exp2[3]) : null,
-                'status' => (!empty($exp2[4])) ? str_slug($exp2[4]) : null,
-                'centimetragem' => (!empty($exp2[5])) ? str_slug($exp2[5]) : null,
-                'usuario_id' =>$data['usuario_id'][$count]
-              ];
+              if ($this->checkType($data['type'][$count])) :
+                $array_clipping[] = [
+                  'assunto_id' => (!isset($data['assunto_id'][$count])) ? null : $data['assunto_id'][$count],
+                  'assunto' => $data['assunto'][$count],
+                  'cliente_id' => $data['cliente_id'][$count],
+                  'data_clipping' => (!empty($exp2[0])) ? $exp2[0] : null,
+                  'jornal' => (!empty($exp2[1])) ? str_slug($exp2[1]) : null,
+                  'editoria' => (!empty($exp2[2])) ? str_slug($exp2[2]) : null,
+                  'fontes' => (!empty($exp2[3])) ? str_slug($exp2[3]) : null,
+                  'status' => (!empty($exp2[4])) ? str_slug($exp2[4]) : null,
+                  'centimetragem' => (!empty($exp2[5])) ? str_slug($exp2[5]) : null,
+                  'usuario_id' =>$data['usuario_id'][$count]
+                ];
+              else:
+                $array_clipping[] = [
+                  'assunto_id' => (!isset($data['assunto_id'][$count])) ? null : $data['assunto_id'][$count],
+                  'assunto' => $data['assunto'][$count],
+                  'cliente_id' => $data['cliente_id'][$count],
+                  'data_clipping' => (!empty($exp2[0])) ? $exp2[0] : null,
+                  'jornal' => (!empty($exp2[1])) ? str_slug($exp2[1]) : null,
+                  'editoria' => (!empty($exp2[2])) ? str_slug($exp2[2]) : null,
+                  'fontes' => "espontanea",
+                  'status' => "positiva",
+                  'centimetragem' => 0,
+                  'usuario_id' =>$data['usuario_id'][$count]
+                ];
+              endif;
 
               $jornal = Clippings::getIdBySlug($array_clipping[$count]['jornal'],'Jornais');
               $jornal = (!is_numeric($jornal)) ? $jornal." no arquivo ->".$nameOriginal : $jornal;
@@ -134,7 +153,8 @@ class ClippingController extends Controller
                 'centimetragem' => $centimetragem,
                 'cliente_id' => $data['cliente_id'][$count],
                 'usuario_id' => $data['usuario_id'][$count],
-                'image_clipping' => $f
+                'image_clipping' => $f,
+                'type'=>$data['type'][$count]
               ];
             $count++;
             endforeach;

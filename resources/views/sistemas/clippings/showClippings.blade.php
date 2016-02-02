@@ -1,5 +1,11 @@
 @extends('admin-lte.dashboard')
 @section('content')
+<?php $map = [
+  "n"=>"Notícia",
+  "i"=>"Informativo",
+  "pb"=>"Publicidade Legal",
+  "pp"=>"Proganda"
+]; ?>
 <div class='row'>
   <div class='col-md-10'>
     <div class='box'>
@@ -37,11 +43,17 @@
                     break;
               } ?>
             </td>
+            @if ($data->type=="n")
             <td><a href="{{$data->file_image}}">{{
               date("d.m.y",strtotime($data->data_clipping))." - ".$data->jornal->nome." - " .$data->editoria->nome." - ".
               $data->fonte->nome." - ".$data->status->nome." - ".$data->centimetragem
             }}</a></td>
-
+            @else
+            <td><a href="{{$data->file_image}}">{{
+              date("d.m.y",strtotime($data->data_clipping))." - ".$data->jornal->nome." - " .$data->editoria->nome." - ".
+              $map[$data->type]
+            }}</a></td>
+            @endif
           </tr>
         </tbody>
       </table>
