@@ -293,8 +293,7 @@ class ClippingController extends Controller
     }
 
     public function enviar(Request $request,$id) {
-      set_time_limit(6000);
-      ini_set('xdebug.max_nesting_level', 200);
+      ini_set('xdebug.max_nesting_level', 600);
       $host = (string) $_SERVER['SERVER_NAME'].":8000";
       $data = Clippings::find($id);
       $host2 =  "http://".$host.$data->file_image;
