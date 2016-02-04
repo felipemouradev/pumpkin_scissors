@@ -30,7 +30,7 @@
           </div>
           <div class='form-group'>
               <label for='exampleInput'>Mailing</label>
-              <textarea name="mailing" class="form-control" placeholder='Digite os Emails separados por virgula, exemplo: fulano@fulano.com, cicrano@cicrano.com'>{{ old('mailing') }}</textarea>
+              <textarea name="mailing" class="form-control" placeholder='Digite os Emails separados por virgula, exemplo: fulano@fulano.com, cicrano@cicrano.com'>{{old('mailing')}}</textarea>
           </div>
         </div>
         <div class='box-footer'>

@@ -10,7 +10,18 @@
       <div class='box-body'>
         <table class='table table-condensed'>
           <tbody>
-          <tr><th style='width: 10px'>Codigo</th><th>Nome</th><th>Cpf</th><th>Telefone</th><th>Mailing</th> </tr><tr><td>{{ $data->id }} </td><td>{{ $data->nome }} </td><td>{{ $data->cpf }} </td><td>{{ $data->telefone }} </td><td>{{ $data->mailing }} </td></tr>
+          <tr><th style='width: 10px'>Codigo</th>
+            <th>Nome</th>
+            <th>Cpf</th>
+            <th>Telefone</th>
+            <th>Mailing</th>
+          </tr>
+          <tr>
+            <td>{{ $data->id }}</td>
+            <td>{{ $data->nome }}</td>
+            <td>{{ $data->cpf }}</td>
+            <td>{{ $data->telefone }}</td>
+            <td>{{ $data->mailing }}</td></tr>
         </tbody></table>
       </div>
       <!-- /.box-body -->

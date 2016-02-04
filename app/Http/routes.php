@@ -152,6 +152,8 @@ Route::group(['middleware' => ['web']], function () {
     		Route::post('/atualizar','ClippingController@atualizar');
     		Route::post('/salvar','ClippingController@salvar');
 
+        Route::get('/{id}/send-clipping','ClippingController@enviar');
+
     	});
 
 	});

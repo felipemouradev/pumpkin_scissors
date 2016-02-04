@@ -61,6 +61,7 @@
             <a href='/admin/clipping/{{ $k->id }}'><span class='badge bg-green'>Ver</span></a>
             <a href='/admin/clipping/{{ $k->id }}/editar'><span class='badge bg-yellow'>Editar</span></a>
             <a href='/admin/clipping/{{ $k->id }}/deletar'><span class='badge bg-red'>Excluir</span></a>
+            <a href='/admin/clipping/{{ $k->id }}/send-clipping'><span class="badge bg-light-blue">Enviar</span>
           </td>
         </tr>
         @endforeach

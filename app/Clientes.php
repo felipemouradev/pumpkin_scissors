@@ -27,4 +27,9 @@ class Clientes extends Model
 
       return false;
     }
+
+    public function setMailingAttribute($value)
+    {
+        $this->attributes['mailing'] = ltrim(strtolower($value));
+    }
 }

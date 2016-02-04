@@ -13,6 +13,7 @@ use App\Assuntos;
 use App\Status;
 use App\Fontes;
 use App\Clientes;
+use Mail;
 
 class ClippingController extends Controller
 {
@@ -289,5 +290,33 @@ class ClippingController extends Controller
             $request->session()->put('msgs','Erro ao deletar!');
             return redirect()->back();
         }
+    }
+
+    public function enviar(Request $request,$id) {
+      ini_set('xdebug.max_nesting_level', 200);
+      $host = (string) $_SERVER['SERVER_NAME'].":8000";
+      $data = Clippings::find($id);
+      $host2 =  "http://".$host.$data->file_image;
+
+      $destines = explode(",",$data->cliente->mailing);
+
+      foreach ($destines as $destine) {
+        $config['mailing'][] = $destine;
+      }
+      $config['DestineName'] = $data->cliente->nome;
+      $config['attach'] = public_path().$data->file_image;
+
+      //dd($config);
+
+      $sent = Mail::queue('emails.blank', compact('data',$data,'host2',$host2), function($message) use ($config)
+      {
+          $message->from('gatao@gmail.com');
+          $message->to($config['mailing'])->subject('Clipping Cliente '.$config['DestineName']." ".date('d/m/Y'));
+          $message->attach($config['attach']);
+      });
+
+      $request->session()->put('msgs','Mensagens adcionados a fila');
+      return redirect()->back();
+
     }
 }
