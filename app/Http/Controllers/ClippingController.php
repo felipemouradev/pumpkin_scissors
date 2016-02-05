@@ -294,9 +294,10 @@ class ClippingController extends Controller
 
     public function enviar(Request $request,$id) {
       ini_set('xdebug.max_nesting_level', 600);
-      $host = (string) $_SERVER['SERVER_NAME'].":8000";
+      $host = json_decode(getenv("HOST"));
+
       $data = Clippings::find($id);
-      $host2 =  "http://".$host.$data->file_image;
+      $host2 = $host->host.$data->file_image;
 
       $destines = explode(",",$data->cliente->mailing);
 
