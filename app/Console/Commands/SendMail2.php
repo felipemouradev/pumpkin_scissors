@@ -11,7 +11,7 @@ class TestTask extends Command
      *
      * @var string
      */
-    protected $signature = 'testtask';
+    protected $signature = 'sendmail';
 
     /**
      * The console command description.
