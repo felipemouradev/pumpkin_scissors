@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EnvioClippins extends Model
+class EnvioClippings extends Model
 {
     //
     protected $guarded = ["id"];

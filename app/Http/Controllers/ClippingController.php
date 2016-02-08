@@ -14,10 +14,51 @@ use App\Status;
 use App\Fontes;
 use App\Clientes;
 use Mail;
+use App\Envios;
+use App\EnvioClippings;
 
 class ClippingController extends Controller
 {
     //
+    public function savemail(Request $request){
+
+      $data = $request->all();
+
+      foreach ($data['compost'] as $compost) {
+        $exp = explode("@",$compost);
+
+        $clipping_id = $exp[0];
+        $cliente_id = $exp[1];
+
+        $new['clipping'][] = [
+          'cliente_id' => $cliente_id,
+          'clipping_id' => $clipping_id
+        ];
+
+      }
+      $pacote = $new['clipping'];
+      for($i=0;$i<count($pacote); $i++) {
+
+        if ($pacote[$i]['cliente_id']==$pacote[count($pacote)-$i]){
+          $newPacote[] = array_merge($pacote[$i],$pacote[count($pacote)-$i]);
+        }
+        
+      }
+
+
+
+      dd($newPacote);
+
+      if($create) {
+        $request->session()->put('msgs','Clippings Salvos');
+        return redirect()->back();
+      } else {
+        $request->session()->put('msgs','Houve um problema');
+        return redirect()->back();
+      }
+
+    }
+
     public function listar(){
         $data = Clippings::orderBy('id','DESC')->paginate(10);
         return view('sistemas.clippings.listClippings',compact('data',$data));
@@ -291,6 +332,47 @@ class ClippingController extends Controller
             return redirect()->back();
         }
     }
+    public function emailDispacher(){
+      ini_set('xdebug.max_nesting_level', 600);
+      $host = json_decode(getenv("HOST"));
+      $allMail = Envios::all();
+      $config = array();
+      $count = 0;
+      $num = 0;
+      foreach ($allMail as $mail) {
+        $clippings = $mail->clippingEnvios;
+        foreach ($clippings as $clipping) {
+          //dd($clipping);
+          $data = Clippings::find($clipping->clipping_id);
+          $redata[$num][] = $data;
+          $destines = explode(",",$data->cliente->mailing);
+
+          if($count==0) :
+            foreach ($destines as $destine) {
+              $config[$num]['mailing'][] = $destine;
+            }
+            $config[$num]['DestineName'] = $data->cliente->nome;
+          endif;
+          $config[$num]['attach'][] = public_path().$data->file_image;
+          $count++;
+        }
+        $count = 0;
+        $num++;
+      }
+      //dd($config);
+      for($i=0;$i<count($allMail);$i++) {
+        $newConfig = $config[$i];
+        //dd($redata[$i]);
+        $sent = Mail::queue('emails.blank', ["clipping"=>$redata[$i],"host"=>$host->host], function($message) use ($newConfig)
+        {
+            $message->from('gatao@gmail.com');
+            $message->to($newConfig['mailing'])->subject('Clipping Cliente '.$newConfig['DestineName']." ".date('d/m/Y')." - ".date("H:m:ss"));
+            for($at = 0; $at<count($newConfig['attach']); $at++){
+                $message->attach($newConfig['attach'][$at]);
+            }
+        });
+      }
+    }
 
     public function enviar(Request $request,$id) {
       ini_set('xdebug.max_nesting_level', 600);
@@ -318,6 +400,13 @@ class ClippingController extends Controller
 
       $request->session()->put('msgs','Mensagens adcionados a fila');
       return redirect()->back();
+
+    }
+
+    public function dashboard(){
+
+      $data = Clippings::orderBy('id','DESC')->paginate(10);
+      return view('sistemas.clippings.dashboardClippings',compact('data',$data));
 
     }
 }

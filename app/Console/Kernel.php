@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         // Commands\Inspire::class,
         Commands\GeraForm::class,
         Commands\Permissoes::class,
-        Commands\TestTask::class,
+        //Commands\TestTask::class,
     ];
 
     /**
@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('testtask')
-                 ->everyMinute();
+        // $schedule->command('testtask')
+        //          ->everyMinute();
     }
 }

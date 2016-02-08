@@ -14,6 +14,8 @@ class CreateEnviosTable extends Migration
     {
         Schema::create('envios', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('flEnvio')->default(0);
+            $table->integer('flReenvio')->default(0);
             $table->timestamps();
         });
     }

@@ -15,9 +15,12 @@ class CreateEnvioClippingsTable extends Migration
         Schema::create('envio_clippings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('clipping_id')->unsigned();
+            $table->integer('envio_id')->unsigned();
+
             $table->timestamps();
 
             $table->foreign('clipping_id')->references('id')->on('clippings');
+            $table->foreign('envio_id')->references('id')->on('envios');
         });
     }
 
