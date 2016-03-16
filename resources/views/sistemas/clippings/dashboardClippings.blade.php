@@ -15,10 +15,11 @@
       <form action="/admin/clipping/savemail" method="post">
         <h3>Notícias</h3>
         @foreach ($data as $k )
+
         @if($k->type=="n")
         <input type="checkbox" value="{{$k->id.'@'.$k->cliente->id}}" name="compost[]"> #
         <a href="{{$k->file_image}}">{{ date('d/m/Y',strtotime($k->data_clipping))." - ".$k->jornal->nome." - ".$k->editoria->nome." - ".$k->fonte->nome." - ".$k->status->nome." - ".$k->centimetragem }}</a>
-         - ({{ $k->cliente->nome }})
+         - ({{ $k->cliente->nome }}) - {{ $k->envio_clipping->created_at }} 
         <br>
         @endif
         @endforeach
